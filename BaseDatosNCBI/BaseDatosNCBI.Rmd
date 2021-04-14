@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Set Up
+```{r}
+setwd(getwd())
+library("seqinr")
+library("ggplot2")
+library("dplyr")
+
+comp <- 0
+virus <- 0
+infoVirus <- function(fasta){
+  virus <- fasta[[1]]
+  seq <- virus[1:length(virus)]
+  info <- summary(virus)
+  cat("Tamaño de la secuencia:\n",info$length)
+  cat("\n\nComposición de nucleótidos:")
+  print(info$composition)
+  cat("\nPorcentaje de Guanina-Citosina (GC):\n", info$GC*100,"%\n")
+  
+  cat("\nSecuencia original (muestra de 30):\n",seq[1:30])
+  cat("\n\nSecuencia complementaria (muestra de 30):\n",complementaryStrand(seq)[1:30]) 
+}
+
+complementaryStrand <- function(forwardDNA){
+  compStrand <- c(1:length(forwardDNA))
+  for(i in 1:length(forwardDNA)){
+    if      (forwardDNA[i] == 'c'){compStrand[i] <- 'g'}
+    else if (forwardDNA[i] == 'g'){compStrand[i] <- 'c'}
+    else if (forwardDNA[i] == 'a'){compStrand[i] <- 't'}
+    else if (forwardDNA[i] == 't'){compStrand[i] <- 'a'}
+    else if (forwardDNA[i] == '-'){compStrand[i] <- '-'}
+    else if (forwardDNA[i] == 'n'){compStrand[i] <- 'n'}
+  }
+  
+  return(compStrand)
+}
+```
+
+Zika Virus
+```{r}
+infoVirus(read.fasta("zika.fasta"))
+```
+
+SARS Coronavirus
+```{r}
+infoVirus(read.fasta("coronavirus.fasta"))
+```
+
+Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
+```{r}
+infoVirus(read.fasta("wuhan1.fasta"))
+```
+
+Middle East respiratory syndrome coronavirus
+```{r}
+infoVirus(read.fasta("mers.fasta"))
+```
+
+Dengue virus 1
+```{r}
+infoVirus(read.fasta("dengue.fasta"))
+```
+
+H1N1
+```{r}
+infoVirus(read.fasta("h1n1.fasta"))
+```
+
