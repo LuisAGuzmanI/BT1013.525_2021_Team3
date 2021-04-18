@@ -47,12 +47,12 @@ infoVirus(read.fasta("zika.fasta"))
 
 SARS Coronavirus
 ```{r}
-infoVirus(read.fasta("coronavirus.fasta"))
+infoVirus(read.fasta("SarsCovid.fasta"))
 ```
 
 Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
 ```{r}
-infoVirus(read.fasta("wuhan1.fasta"))
+infoVirus(read.fasta("Wu-Han-1.fasta"))
 ```
 
 Middle East respiratory syndrome coronavirus
@@ -62,11 +62,13 @@ infoVirus(read.fasta("mers.fasta"))
 
 Dengue virus 1
 ```{r}
-infoVirus(read.fasta("dengue.fasta"))
+infoVirus(read.fasta("Dengue.fasta"))
 ```
 
 H1N1
 ```{r}
-infoVirus(read.fasta("h1n1.fasta"))
+infoVirus(read.fasta("H1N1.fasta"))
 ```
+
+
 
