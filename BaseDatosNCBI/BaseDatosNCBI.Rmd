@@ -1,4 +1,4 @@
----
+S---
 title: "R Notebook"
 output: html_notebook
 ---
@@ -19,10 +19,23 @@ infoVirus <- function(fasta){
   cat("Tamaño de la secuencia:\n",info$length)
   cat("\n\nComposición de nucleótidos:")
   print(info$composition)
+  
   cat("\nPorcentaje de Guanina-Citosina (GC):\n", info$GC*100,"%\n")
   
   cat("\nSecuencia original (muestra de 30):\n",seq[1:30])
   cat("\n\nSecuencia complementaria (muestra de 30):\n",complementaryStrand(seq)[1:30]) 
+  
+  compositions <- c(info$composition[1],info$composition[2],info$composition[3],info$composition[4]) 
+  
+  return(compositions)
+}
+
+virusComposition <- function(fasta){
+  info <- summary(virus)
+  
+  compositions <- c(info$composition[1],info$composition[2],info$composition[3],info$composition[4]) 
+  
+  return(compositions)
 }
 
 complementaryStrand <- function(forwardDNA){
@@ -43,32 +56,58 @@ complementaryStrand <- function(forwardDNA){
 Zika Virus
 ```{r}
 infoVirus(read.fasta("zika.fasta"))
+zikaComposition <- virusComposition(read.fasta("zika.fasta"))
 ```
 
 SARS Coronavirus
 ```{r}
 infoVirus(read.fasta("SarsCovid.fasta"))
+sarsComposition <- virusComposition(read.fasta("SarsCovid.fasta"))
 ```
 
 Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
 ```{r}
 infoVirus(read.fasta("Wu-Han-1.fasta"))
+wuhan1Composition <- virusComposition(read.fasta("Wu-Han-1.fasta"))
 ```
 
 Middle East respiratory syndrome coronavirus
 ```{r}
 infoVirus(read.fasta("mers.fasta"))
+mersComposition <- virusComposition(read.fasta("mers.fasta"))
 ```
 
 Dengue virus 1
 ```{r}
 infoVirus(read.fasta("Dengue.fasta"))
+dengueComposition <- virusComposition(read.fasta("Dengue.fasta"))
 ```
 
 H1N1
 ```{r}
 infoVirus(read.fasta("H1N1.fasta"))
+h1n1Composition <- virusComposition(read.fasta("H1N1.fasta"))
 ```
 
+Graficación
+```{r}
+#nucleotidos <- c("Adenina", "Citocina", "Guanina", "Tinina")
+nucleotidos <- c(1, 2, 3, 4)
 
+dfCompositions <- data.frame(
+  nucleotidos,
+  zikaComposition,
+  sarsComposition,
+  wuhan1Composition,
+  dengueComposition,
+  h1n1Composition
+)
 
+print(dfCompositions)
+ggplot(dfCompositions, aes(nucleotidos, zikaComposition)) + 
+  geom_line(color = 'red') + 
+  geom_line(y = sarsComposition, color = 'blue') + 
+  geom_line(y = wuhan1Composition, color = 'green') + 
+  geom_line(y = dengueComposition, color = 'black') + 
+  geom_line(y = h1n1Composition, color = 'yellow') 
+```
