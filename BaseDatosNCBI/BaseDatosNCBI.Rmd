@@ -1,4 +1,4 @@
----
+S---
 title: "R Notebook"
 output: html_notebook
 ---
@@ -19,11 +19,11 @@ infoVirus <- function(fasta){
   cat("Tamaño de la secuencia:\n",info$length)
   cat("\n\nComposición de nucleótidos:")
   print(info$composition)
+  
   cat("\nPorcentaje de Guanina-Citosina (GC):\n", info$GC*100,"%\n")
   
   cat("\nSecuencia original (muestra de 30):\n",seq[1:30])
   cat("\n\nSecuencia complementaria (muestra de 30):\n",complementaryStrand(seq)[1:30]) 
-<<<<<<< HEAD
   
   compositions <- c(info$composition[1],info$composition[2],info$composition[3],info$composition[4]) 
   
@@ -31,13 +31,12 @@ infoVirus <- function(fasta){
 }
 
 virusComposition <- function(fasta){
+  virus <- fasta[[1]]
   info <- summary(virus)
   
   compositions <- c(info$composition[1],info$composition[2],info$composition[3],info$composition[4]) 
   
   return(compositions)
-=======
->>>>>>> parent of d778383... [ENHANCEMENT] Corrected previous commit about graphic
 }
 
 complementaryStrand <- function(forwardDNA){
@@ -58,57 +57,80 @@ complementaryStrand <- function(forwardDNA){
 Zika Virus
 ```{r}
 infoVirus(read.fasta("zika.fasta"))
+zikaComposition <- virusComposition(read.fasta("zika.fasta"))
 ```
 
 SARS Coronavirus
 ```{r}
 infoVirus(read.fasta("SarsCovid.fasta"))
+sarsComposition <- virusComposition(read.fasta("SarsCovid.fasta"))
 ```
 
 Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
 ```{r}
 infoVirus(read.fasta("Wu-Han-1.fasta"))
+wuhan1Composition <- virusComposition(read.fasta("Wu-Han-1.fasta"))
 ```
 
 Middle East respiratory syndrome coronavirus
 ```{r}
 infoVirus(read.fasta("mers.fasta"))
+mersComposition <- virusComposition(read.fasta("mers.fasta"))
 ```
 
 Dengue virus 1
 ```{r}
 infoVirus(read.fasta("Dengue.fasta"))
+dengueComposition <- virusComposition(read.fasta("Dengue.fasta"))
 ```
 
 H1N1
 ```{r}
 infoVirus(read.fasta("H1N1.fasta"))
+h1n1Composition <- virusComposition(read.fasta("H1N1.fasta"))
 ```
 
-<<<<<<< HEAD
 Graficación
 ```{r}
-#nucleotidos <- c("Adenina", "Citocina", "Guanina", "Tinina")
-nucleotidos <- c(1, 2, 3, 4)
+#nomVirus <- c("Zika","Sars","Wuhan 1","Mers","Dengue")
+Virus <- c(1,2,3,4,5)
+
+Nucleotidos <- c(zikaComposition[1], sarsComposition[1], wuhan1Composition[1], dengueComposition[1], h1n1Composition[1]) #Este representa las adeninas, pero lo cambié a nucleotidos para corregir la grafica ES NECESARIO ARREGLARLO DESPUES
+
+Citocinas <- c(zikaComposition[2], sarsComposition[2], wuhan1Composition[2], dengueComposition[2], h1n1Composition[2])
+
+Guaninas <- c(zikaComposition[3], sarsComposition[3], wuhan1Composition[3], dengueComposition[3], h1n1Composition[3])
+
+Tininas <- c(zikaComposition[4], sarsComposition[4], wuhan1Composition[4], dengueComposition[4], h1n1Composition[4])
 
 dfCompositions <- data.frame(
-  nucleotidos,
-  zikaComposition,
-  sarsComposition,
-  wuhan1Composition,
-  dengueComposition,
-  h1n1Composition
+  Virus,
+  Nucleotidos,
+  Citocinas,
+  Guaninas,
+  Tininas
 )
 
+# En la grafica, los numeros representan los virus de la siguiente manera
+#1 = Zika Virus
+#2 = SARS Coronavirus 
+#3 = Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
+#4 = Dengue virus 1
+#5 = H1N1 Virus
+
+#Las lineas representan cada uno de los nucleotidos en su respectivo virus de la siguiente manera:
+#Rojo = Adenina
+#Azul = Citocina
+#Verde = Guanina
+#Tinina = 
+
 print(dfCompositions)
-ggplot(dfCompositions, aes(nucleotidos, zikaComposition)) + 
-  geom_line(color = 'red') + 
-  geom_line(y = sarsComposition, color = 'blue') + 
-  geom_line(y = wuhan1Composition, color = 'green') + 
-  geom_line(y = dengueComposition, color = 'black') + 
-  geom_line(y = h1n1Composition, color = 'yellow') 
+graphic <- ggplot(dfCompositions, aes(Virus, Nucleotidos), group = nomVirus) + 
+  geom_line(linetype="dashed", color = 'red', size = 1) +
+  geom_line(linetype="dashed", y = Citocinas, color = 'blue', size = 1) +
+  geom_line(linetype="dashed", y = Guaninas, color = 'green', size = 1) +
+  geom_line(linetype="dashed", y = Tininas, color = 'black', size = 1)
+
+print(graphic)
+
 ```
-=======
-
-
->>>>>>> parent of d778383... [ENHANCEMENT] Corrected previous commit about graphic
