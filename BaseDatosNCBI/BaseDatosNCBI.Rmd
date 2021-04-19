@@ -101,14 +101,14 @@ Citocinas <- c(zikaComposition[2], sarsComposition[2], wuhan1Composition[2], den
 
 Guaninas <- c(zikaComposition[3], sarsComposition[3], wuhan1Composition[3], dengueComposition[3], h1n1Composition[3])
 
-Tininas <- c(zikaComposition[4], sarsComposition[4], wuhan1Composition[4], dengueComposition[4], h1n1Composition[4])
+Timinas <- c(zikaComposition[4], sarsComposition[4], wuhan1Composition[4], dengueComposition[4], h1n1Composition[4])
 
 dfCompositions <- data.frame(
   Virus,
   Nucleotidos,
   Citocinas,
   Guaninas,
-  Tininas
+  Timinas
 )
 
 # En la grafica, los numeros representan los virus de la siguiente manera
@@ -122,14 +122,14 @@ dfCompositions <- data.frame(
 #Rojo = Adenina
 #Azul = Citocina
 #Verde = Guanina
-#Tinina = 
+#Negro = Timina
 
 print(dfCompositions)
 graphic <- ggplot(dfCompositions, aes(Virus, Nucleotidos), group = nomVirus) + 
   geom_line(linetype="dashed", color = 'red', size = 1) +
   geom_line(linetype="dashed", y = Citocinas, color = 'blue', size = 1) +
   geom_line(linetype="dashed", y = Guaninas, color = 'green', size = 1) +
-  geom_line(linetype="dashed", y = Tininas, color = 'black', size = 1)
+  geom_line(linetype="dashed", y = Timinas, color = 'black', size = 1)
 
 print(graphic)
 
