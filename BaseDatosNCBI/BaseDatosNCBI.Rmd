@@ -3,6 +3,16 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+Inegrantes del Equipo:
+
+Antonio López Chávez - [A01741741]
+
+Cristian Javier Cázares Mólina - [A01741952]
+
+Melissa Paola Santana Meza - [A01740461] 
+
+Luis Ángel Guzmán Iribe - [A01741757]
+
 Set Up
 ```{r}
 setwd(getwd())
@@ -92,31 +102,36 @@ h1n1Composition <- virusComposition(read.fasta("H1N1.fasta"))
 
 Graficación
 ```{r}
-#nomVirus <- c("Zika","Sars","Wuhan 1","Mers","Dengue")
-Virus <- c(1,2,3,4,5)
+#Virus <- c("Zika","Sars","Wuhan 1","Mers","Dengue","H1N1")
+Virus <- c(1,2,3,4,5,6)
 
-Nucleotidos <- c(zikaComposition[1], sarsComposition[1], wuhan1Composition[1], dengueComposition[1], h1n1Composition[1]) #Este representa las adeninas, pero lo cambié a nucleotidos para corregir la grafica ES NECESARIO ARREGLARLO DESPUES
+Nucleotidos <- c(zikaComposition[1], sarsComposition[1], wuhan1Composition[1], mersComposition[1], dengueComposition[1], h1n1Composition[1]) #Este representa las adeninas, pero lo cambié a nucleotidos para corregir la grafica ES NECESARIO ARREGLARLO DESPUES
 
-Citocinas <- c(zikaComposition[2], sarsComposition[2], wuhan1Composition[2], dengueComposition[2], h1n1Composition[2])
+N_Citocinas <- c(zikaComposition[2], sarsComposition[2], wuhan1Composition[2], mersComposition[2], dengueComposition[2], h1n1Composition[2])
 
-Guaninas <- c(zikaComposition[3], sarsComposition[3], wuhan1Composition[3], dengueComposition[3], h1n1Composition[3])
+N_Guaninas <- c(zikaComposition[3], sarsComposition[3], wuhan1Composition[3], mersComposition[3], dengueComposition[3], h1n1Composition[3])
 
-Timinas <- c(zikaComposition[4], sarsComposition[4], wuhan1Composition[4], dengueComposition[4], h1n1Composition[4])
+N_Timinas <- c(zikaComposition[4], sarsComposition[4], wuhan1Composition[4], mersComposition[4], dengueComposition[4], h1n1Composition[4])
 
 dfCompositions <- data.frame(
   Virus,
   Nucleotidos,
-  Citocinas,
-  Guaninas,
-  Timinas
+  N_Citocinas,
+  N_Guaninas,
+  N_Timinas
 )
+```
+
+
+```{r}
 
 # En la grafica, los numeros representan los virus de la siguiente manera
 #1 = Zika Virus
 #2 = SARS Coronavirus 
 #3 = Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
-#4 = Dengue virus 1
-#5 = H1N1 Virus
+#4 = Middle East respiratory syndrome coronavirus
+#5 = Dengue virus 1
+#6 = H1N1 Virus
 
 #Las lineas representan cada uno de los nucleotidos en su respectivo virus de la siguiente manera:
 #Rojo = Adenina
@@ -125,12 +140,9 @@ dfCompositions <- data.frame(
 #Negro = Timina
 
 print(dfCompositions)
-graphic <- ggplot(dfCompositions, aes(Virus, Nucleotidos), group = nomVirus) + 
+ggplot(dfCompositions, aes(Virus, Nucleotidos, group = 1)) + 
   geom_line(linetype="dashed", color = 'red', size = 1) +
-  geom_line(linetype="dashed", y = Citocinas, color = 'blue', size = 1) +
-  geom_line(linetype="dashed", y = Guaninas, color = 'green', size = 1) +
-  geom_line(linetype="dashed", y = Timinas, color = 'black', size = 1)
-
-print(graphic)
-
+  geom_line(linetype="dashed", y = N_Citocinas, color = 'blue', size = 1) +
+  geom_line(linetype="dashed", y = N_Guaninas, color = 'green', size = 1) +
+  geom_line(linetype="dashed", y = N_Timinas, color = 'black', size = 1)
 ```
