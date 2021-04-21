@@ -30,7 +30,7 @@ infoVirus <- function(fasta){
   cat("\nPorcentaje de Guanina-Citosina (GC):\n", info$GC*100,"%\n")
   
   cat("\nSecuencia original (muestra de 30):\n",seq[1:30])
-  cat("\n\nSecuencia complementaria (muestra de 30):\n",complementaryStrand(seq)[1:30]) 
+  cat("\n\nSecuencia complementaria/contrasentido (muestra de 30):\n",complementaryStrand(seq)[1:30]) 
 }
 
 complementaryStrand <- function(forwardDNA){
@@ -96,4 +96,6 @@ data <- data.frame(virusNames, nucsNames, nucsValues);
 
 # Gráfica de barras
 ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position="dodge", stat="identity")
+
+cat("La gráfica utiliza los porcentajes de cada base nitrogenada en su respectiva secuencia, extraídos de cada archivo fasta y agrupados en un Data Frame. Cada base se representa en la gráfica de barras con un color distintivo, para su fácil distinción y se agrupan por virus analizado, permitiendo apreciar visualmente sus variaciones de una manera sencilla. Igualmente se incluyeron sus diferencias numéricas para verificar su exactitud.\n")
 ```
