@@ -364,7 +364,7 @@ Timina:      21
 <p>Comparación de la composición de nucleótidos de los virus anteriores:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmlydXNOYW1lcyA8LSBjKHJlcChcIk9yaWdpbmFsXCIsNCkscmVwKFwiVmFyaWFudGUgQnJpdMOhbmljYVwiLDQpKTtcblxubnVjc05hbWVzIDwtIHJlcChjKFwiYVwiLFwiY1wiLFwiZ1wiLFwidFwiKSwyKTtcblxubnVjc1ZhbHVlcyA8LSBjKGNvdk51Yyxjb3ZVS051Yyk7XG5cbmRhdGEgPC0gZGF0YS5mcmFtZSh2aXJ1c05hbWVzLCBudWNzTmFtZXMsIG51Y3NWYWx1ZXMpO1xuXG4jIEdyb3VwZWRcbmdncGxvdChkYXRhLCBhZXMoZmlsbD1udWNzTmFtZXMsIHk9bnVjc1ZhbHVlcywgeD12aXJ1c05hbWVzKSkrZ2VvbV9iYXIocG9zaXRpb249XCJkb2RnZVwiLCBzdGF0PVwiaWRlbnRpdHlcIilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmlydXNOYW1lcyA8LSBjKHJlcChcIk9yaWdpbmFsXCIsNCkscmVwKFwiVmFyaWFudGUgQnJpdMOhbmljYVwiLDQpKTtcblxubnVjc05hbWVzIDwtIHJlcChjKFwiYVwiLFwiY1wiLFwiZ1wiLFwidFwiKSwyKTtcblxubnVjc1ZhbHVlcyA8LSBjKGNvdk51Yyxjb3ZVS051Yyk7XG5cbmRhdGEgPC0gZGF0YS5mcmFtZSh2aXJ1c05hbWVzLCBudWNzTmFtZXMsIG51Y3NWYWx1ZXMpO1xuXG4jIEdyw6FmaWNhIGRlIGJhcnJhc1xuZ2dwbG90KGRhdGEsIGFlcyhmaWxsPW51Y3NOYW1lcywgeT1udWNzVmFsdWVzLCB4PXZpcnVzTmFtZXMpKStnZW9tX2Jhcihwb3NpdGlvbj1cImRvZGdlXCIsIHN0YXQ9XCJpZGVudGl0eVwiKVxuYGBgIn0= -->
 <pre class="r"><code>virusNames &lt;- c(rep(&quot;Original&quot;,4),rep(&quot;Variante Británica&quot;,4));
 
 nucsNames &lt;- rep(c(&quot;a&quot;,&quot;c&quot;,&quot;g&quot;,&quot;t&quot;),2);
@@ -373,7 +373,7 @@ nucsValues &lt;- c(covNuc,covUKNuc);
 
 data &lt;- data.frame(virusNames, nucsNames, nucsValues);
 
-# Grouped
+# Gráfica de barras
 ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-plot-begin eyJoZWlnaHQiOjQzMi42MzI5LCJ3aWR0aCI6NzAwLCJzaXplX2JlaGF2aW9yIjowLCJjb25kaXRpb25zIjpbXX0= -->
