@@ -1,0 +1,106 @@
+---
+title: "Análisis variantes SARS-CoV-2"
+output: html_notebook
+---
+
+```{r}
+cat("Elaborado por:
+Cristian Cázares - A01741952
+Antonio López    - A01741741
+Luis Á. Guzmán   - A01741757
+Melissa Santana  - A01740461")
+```
+
+
+
+Set Up
+```{r}
+setwd(getwd())
+library("seqinr")
+library("ggplot2")
+library("dplyr")
+
+infoVirus <- function(fasta){
+  virus <- fasta[[1]]
+  seq <- virus[1:length(virus)]
+  info <- summary(virus)
+  cat("Tamaño de la secuencia:\n",info$length)
+  cat("\n\nComposición de nucleótidos:")
+  print(info$composition)
+  cat("\nPorcentaje de Guanina-Citosina (GC):\n", info$GC*100,"%\n")
+  
+  cat("\nSecuencia original (muestra de 30):\n",seq[1:30])
+  cat("\n\nSecuencia complementaria (muestra de 30):\n",complementaryStrand(seq)[1:30]) 
+}
+
+complementaryStrand <- function(forwardDNA){
+  compStrand <- c(1:length(forwardDNA))
+  for(i in 1:length(forwardDNA)){
+    if      (forwardDNA[i] == 'c'){compStrand[i] <- 'g'}
+    else if (forwardDNA[i] == 'g'){compStrand[i] <- 'c'}
+    else if (forwardDNA[i] == 'a'){compStrand[i] <- 't'}
+    else if (forwardDNA[i] == 't'){compStrand[i] <- 'a'}
+    else if (forwardDNA[i] == '-'){compStrand[i] <- '-'}
+    else if (forwardDNA[i] == 'n'){compStrand[i] <- 'n'}
+  }
+  
+  return(compStrand)
+}
+
+countNuc<- function(fasta){
+  virus <- fasta[[1]]
+  seq <- virus[1:length(virus)]
+  info <- summary(virus)
+  nucs <- c(info$composition[[1]],info$composition[[2]],info$composition[[3]],info$composition[[4]])
+  return(nucs)
+}
+```
+
+
+SARS Coronavirus
+```{r}
+cov = read.fasta("SARS_Covid.fasta")
+infoVirus(cov)
+covNuc = countNuc(cov)
+```
+
+SARS Coronavirus Variante Británica (B.1.1.7, VUI-202012/01)
+```{r}
+covUK = read.fasta("SARS_UK.fasta")
+infoVirus(covUK)
+covUKNuc = countNuc(covUK)
+```
+
+Diferencias en sus nucleótidos
+```{r}
+diferenciasNuc <- function(){
+  cat("Original - Variante:")
+  cat("\nAdenina:\t",   covNuc[1]-covUKNuc[1]);
+  cat("\nCitosina:\t",  covNuc[2]-covUKNuc[2]);
+  cat("\nGuanina:\t",   covNuc[3]-covUKNuc[3]);
+  cat("\nTimina:   \t",    covNuc[4]-covUKNuc[4]);
+  cat("\n\t*Valores negativos: Original<Variante");
+}
+diferenciasNuc();
+```
+
+
+Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
+```{r}
+#infoVirus(read.fasta("Wu-Han-1.fasta"))
+```
+
+
+Comparación de la composición de nucleótidos de los virus anteriores:
+```{r}
+virusNames <- c(rep("Original",4),rep("Variante Británica",4));
+
+nucsNames <- rep(c("a","c","g","t"),2);
+
+nucsValues <- c(covNuc,covUKNuc);
+
+data <- data.frame(virusNames, nucsNames, nucsValues);
+
+# Grouped
+ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position="dodge", stat="identity")
+```
