@@ -94,6 +94,6 @@ nucsValues <- c(covNuc,covUKNuc);
 
 data <- data.frame(virusNames, nucsNames, nucsValues);
 
-# Grouped
+# Gráfica de barras
 ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position="dodge", stat="identity")
 ```
