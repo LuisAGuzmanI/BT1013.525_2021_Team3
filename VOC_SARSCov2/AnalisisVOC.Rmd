@@ -84,13 +84,6 @@ diferenciasNuc <- function(){
 diferenciasNuc();
 ```
 
-
-Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1
-```{r}
-#infoVirus(read.fasta("Wu-Han-1.fasta"))
-```
-
-
 Comparación de la composición de nucleótidos de los virus anteriores:
 ```{r}
 virusNames <- c(rep("Original",4),rep("Variante Británica",4));
