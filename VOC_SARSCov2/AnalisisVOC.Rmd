@@ -86,14 +86,14 @@ diferenciasNuc();
 
 Comparación de la composición de nucleótidos de los virus anteriores:
 ```{r}
-virusNames <- c(rep("Original",4),rep("Variante Británica",4));
+Virus <- c(rep("Original",4),rep("Variante Británica",4));
 
-nucsNames <- rep(c("a","c","g","t"),2);
+Nucleotidos <- rep(c("a","c","g","t"),2);
 
-nucsValues <- c(covNuc,covUKNuc);
+Cantidad <- c(covNuc,covUKNuc);
 
-data <- data.frame(virusNames, nucsNames, nucsValues);
+data <- data.frame(Virus, Nucleotidos, Cantidad);
 
 # Gráfica de barras
-ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position="dodge", stat="identity")
+ggplot(data, aes(fill=Nucleotidos, y=Cantidad, x=Virus))+geom_bar(position="dodge", stat="identity")
 ```

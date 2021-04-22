@@ -84,14 +84,14 @@ infoVirus(read.fasta("H1N1.fasta"))
 
 Comparación de la composición de nucleótidos de los virus anteriores:
 ```{r}
-virusNames <- c(rep("Zika",4),rep("Sars Covid",4),rep("Wuhan-Hu-1",4),rep("MERS",4),rep("Dengue",4),rep("H1N1",4));
+Virus <- c(rep("Zika",4),rep("Sars Covid",4),rep("Wuhan-Hu-1",4),rep("MERS",4),rep("Dengue",4),rep("H1N1",4));
 
-nucsNames <- rep(c("a","c","g","t"),6);
+Nucleotidos <- rep(c("a","c","g","t"),6);
 
-nucsValues <- c(countNuc(read.fasta("zika.fasta")), countNuc(read.fasta("SarsCovid.fasta")),countNuc(read.fasta("Wu-Han-1.fasta")),countNuc(read.fasta("mers.fasta")),countNuc(read.fasta("Dengue.fasta")),countNuc(read.fasta("H1N1.fasta")));
+Cantidad <- c(countNuc(read.fasta("zika.fasta")), countNuc(read.fasta("SarsCovid.fasta")),countNuc(read.fasta("Wu-Han-1.fasta")),countNuc(read.fasta("mers.fasta")),countNuc(read.fasta("Dengue.fasta")),countNuc(read.fasta("H1N1.fasta")));
 
-data <- data.frame(virusNames, nucsNames, nucsValues);
-
+data <- data.frame(Virus, Nucleotidos, Cantidad);
+data
 # Grouped
-ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position="dodge", stat="identity")
+ggplot(data, aes(fill=Nucleotidos, y=Cantidad, x=Virus))+geom_bar(position="dodge", stat="identity")
 ```
