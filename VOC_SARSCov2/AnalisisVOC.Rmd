@@ -5,10 +5,7 @@ output: html_notebook
 
 ```{r}
 cat("Elaborado por:
-Cristian Cázares - A01741952
-Antonio López    - A01741741
-Luis Á. Guzmán   - A01741757
-Melissa Santana  - A01740461")
+Cristian Cázares - A01741952")
 ```
 
 
@@ -86,16 +83,16 @@ diferenciasNuc();
 
 Comparación de la composición de nucleótidos de los virus anteriores:
 ```{r}
-virusNames <- c(rep("Original",4),rep("Variante Británica",4));
+Virus <- c(rep("Original",4),rep("Variante Británica",4));
 
-nucsNames <- rep(c("a","c","g","t"),2);
+Nucleotidos <- rep(c("a","c","g","t"),2);
 
-nucsValues <- c(covNuc,covUKNuc);
+Cantidad <- c(covNuc,covUKNuc);
 
-data <- data.frame(virusNames, nucsNames, nucsValues);
+data <- data.frame(Virus, Nucleotidos, Cantidad);
 
 # Gráfica de barras
-ggplot(data, aes(fill=nucsNames, y=nucsValues, x=virusNames))+geom_bar(position="dodge", stat="identity")
+ggplot(data, aes(fill=Nucleotidos, y=Cantidad, x=Virus))+geom_bar(position="dodge", stat="identity")
 
 cat("La gráfica utiliza los porcentajes de cada base nitrogenada en su respectiva secuencia, extraídos de cada archivo fasta y agrupados en un Data Frame. Cada base se representa en la gráfica de barras con un color distintivo, para su fácil distinción y se agrupan por virus analizado, permitiendo apreciar visualmente sus variaciones de una manera sencilla. Igualmente se incluyeron sus diferencias numéricas para verificar su exactitud.\nTras evaluar estos resultados, es evidente como el virus original es prácticamente idéntico a la variante en cuanto a porcentajes, siendo que sus diferencias son tan pequeñas que no pueden ser apreciadas en la gráfica a esta escala. Es interesante como cambios que apenas se pueden percibir en una comparación directa pueden afectar al comportamiento de un ente, y logra poner en perspectiva la importancia de pequeños cambios en una secuencia de miles de nucleótidos.\n")
 ```
