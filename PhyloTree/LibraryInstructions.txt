@@ -1,0 +1,32 @@
+Libraries required:
+  ggplot2
+  ape       (BiocManager)
+  ggtree    (BiocManager)
+  DECIPHER  (BiocManager)
+  
+
+
+1. Install RTools40
+
+2. Install and load every package as "install.packages("<<<NAME>>>")" EXCLUDING packages from BiocManager.
+
+4. Install BiocManager's packages:
+  Every package from "BiocManager" most be installed like this (console):
+  
+=Console========================================================================
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("<<<Name of the package on BiocManager>>>")
+================================================================================  
+  
+  BiocManager's packages on this project:
+    -ggtree
+    -DECIPHER
+    -ape
+  Other known BiocManager packages:
+    -Biostrings
+    -MSA
+  
+  
+5. If needed, "data.table" has some installation problems that can be solve with the next documentation:
+  https://github.com/Rdatatable/data.table/wiki/Installation#v1141-in-development--
