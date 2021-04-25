@@ -3,8 +3,65 @@ title: "PhyloTree"
 output: html_notebook
 ---
 
+Variantes de coronavirus a emplear:
+```{r}
+virus <- c("JX869059", "AY508724", "MN908947", "AY390556", "AY278489", "MN985325","AY485277","MT292571")
+```
+
+Consultar base de datos NCBI.
+```{r}
+library(ape)
+virusBin <- read.GenBank(virus, name, species.names=TRUE);  #ape (run once)
+
+```
+
+Conversión de secuencias binarias (DNABin) a secuencias de nucleótidos (DNAStringSet):
+```{r}
+dna <- virusBin %>% as.character %>% lapply(.,paste0,collapse="") %>% unlist %>% DNAStringSet   #from DNAbin to DNAStringSet
+print(dna)
+print("(mejor visualizable dentro de R)");
+```
+
+Alineamiento de secuencias:
+```{r}
+library(DECIPHER)
+DNA <- AlignSeqs(dna)         #DECIPHER (run once)
+#AlignSeqs() Uses Cluster algorithm to align.
+BrowseSeqs(DNA, highlight=1)  #DECIPHER (RUN ONCE)
+#BrowSeqs() creates a local server in order to display the aligned sequence 
+```
+
+Secuencias alineadas (muestra de 300 en servidor local por "BrowSeqs()")
+![alt text](https://raw.githubusercontent.com/LuisAGuzmanI/BT1013.525_2021_Team3/master/PhyloTree/DisplayAlignment.png)
+Creación matriz de distancia a partir de la secuencia alineada:
+```{r}
+dist<- DistanceMatrix(DNA); #DECIPHER
+```
+
+
+Graficación de matriz de distancia:
+```{r}
+library(reshape2);
+melted<-melt(dist, value.name=c("Valor"), varnames = c("VirusX","VirusY"));   #reshape2. (melt: from dist matrix to dataframe)
+
+library(ggplot2)
+ggplot(data = melted, aes(x=VirusX, y=VirusY, fill=Valor)) + geom_tile();
+```
+
+
+
+Graficación de arbol filogenético empleando matriz de distancia:
+```{r}
+library(ggtree)
+library(ggmsa)
+library(msa)
+tree <- nj(dist); #ape
+dataMSA = tidy_msa(DNA,180,200)
+```
+
 
 
 ```{r}
-plot(cars)
+ggtree(tree, branch.length = "none") + geom_tiplab(geom = "label", offset = 2, hjust=1) + geom_facet(geom=geom_msa,data=dataMSA,panel='Sequences (180-200)',font=NULL,color="Chemistry_NT",mapping = aes(x = position, y = ~name, fill = character)) + xlim_tree(1)
 ```
+(character = nucleótido)
