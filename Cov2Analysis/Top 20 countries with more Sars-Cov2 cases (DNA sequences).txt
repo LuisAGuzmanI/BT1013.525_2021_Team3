@@ -1,0 +1,24 @@
+Accessions Sars-Cov2
+Top 20 countries with more countries.
+USA - USA - MZ015520 - https://www.ncbi.nlm.nih.gov/nuccore/MZ015520.1
+India - IND - MT434757 - https://www.ncbi.nlm.nih.gov/nuccore/MT434757.2
+Brasil - BRA - MT844030 - https://www.ncbi.nlm.nih.gov/nuccore/MT844030.1
+France - FRA - MW322968 - https://www.ncbi.nlm.nih.gov/nuccore/MW322968.1
+Russia - RUS - MW332241 - https://www.ncbi.nlm.nih.gov/nuccore/MW332241.1
+Turkey - TUR - MW306668 - https://www.ncbi.nlm.nih.gov/nuccore/MW306668.1
+UK - GBR - MT906650 - https://www.ncbi.nlm.nih.gov/nuccore/MT906650.1
+Italy - ITA - MW642250 - https://www.ncbi.nlm.nih.gov/nuccore/MW642250.1
+Spain - ESP - MW769774 - https://www.ncbi.nlm.nih.gov/nuccore/MW769774.1
+Germany - DEU - MT582499 - https://www.ncbi.nlm.nih.gov/nuccore/MT582499.1
+Argentina - ARG - MW633909 - https://www.ncbi.nlm.nih.gov/nuccore/MW633909.1
+Colombia - COL - MT470219 - https://www.ncbi.nlm.nih.gov/nuccore/MT470219.1
+Poland - POL - MT775833 - https://www.ncbi.nlm.nih.gov/nuccore/MT775833.1
+Iran - IRN - MT994881 - https://www.ncbi.nlm.nih.gov/nuccore/MT994881.1
+Mexico - MEX - MW595909 - https://www.ncbi.nlm.nih.gov/nuccore/MW595909.1
+Ukraine - UKR - No results found in NCBI
+Peru - PER - MT263074 - https://www.ncbi.nlm.nih.gov/nuccore/MT263074.1
+Indonesia - IDN - No results found in NCBI
+Czech Rep. - CZE - MT517434 - https://www.ncbi.nlm.nih.gov/nuccore/MT517434.1
+South Africa - ZAF - MT324062 - https://www.ncbi.nlm.nih.gov/nuccore/MT324062.1
+Netherlands - NLD - MT396266 - https://www.ncbi.nlm.nih.gov/nuccore/MT396266.1 (Top 21)
+Cánada - CAN - MW309429 - https://www.ncbi.nlm.nih.gov/nuccore/MW309429.1 (Top 22)
