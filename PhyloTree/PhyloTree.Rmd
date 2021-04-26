@@ -17,6 +17,8 @@ virusBin <- read.GenBank(virus, name, species.names=TRUE);  #ape (run once)
 
 Conversión de secuencias binarias (DNABin) a secuencias de nucleótidos (DNAStringSet):
 ```{r}
+library(magrittr) #Pipe operator(%>%)
+library(DECIPHER) #DNAStringSet, alignment and more
 dna <- virusBin %>% as.character %>% lapply(.,paste0,collapse="") %>% unlist %>% DNAStringSet   #from DNAbin to DNAStringSet
 print(dna)
 print("(mejor visualizable dentro de R)");
@@ -24,7 +26,6 @@ print("(mejor visualizable dentro de R)");
 
 Alineamiento de secuencias:
 ```{r}
-library(DECIPHER)
 DNA <- AlignSeqs(dna)         #DECIPHER (run once)
 #AlignSeqs() Uses Cluster algorithm to align.
 BrowseSeqs(DNA, highlight=1)  #DECIPHER (RUN ONCE)
