@@ -4,6 +4,52 @@ output: html_notebook
 ---
 
 ```{r}
+library(ape)
+library(magrittr) #Pipe operator(%>%)
+library(DECIPHER) #DNAStringSet, alignment and more
+```
 
+
+```{r}
+virusCountries <- c("USA","IND","BRA","FRA","RUS",
+                    "TUR","GBR","ITA","ESP","DEU",
+                    "ARG","COL","POL","IRN","MEX",
+                    "PER","CZE","ZAF","NLD","CAN")
+virusAcc <-       c("MZ015520","MT434757","MT844030","MW322968","MW332241",
+                    "MW306668","MT906650","MW642250","MW769774","MT582499",
+                    "MW633909","MT470219","MT775833","MT994881","MW595909",
+                    "MT263074","MT517434","MT324062","MT396266","MW309429")
+
+virusBin <- read.GenBank(virusAcc) #RUN ONCE
+virus <- virusBin %>% as.character %>% lapply(.,paste0,collapse="") %>% unlist %>% DNAStringSet   #from DNAbin to DNAStringSet
+```
+
+
+Longitudes de los virus
+```{r}
+data.frame("Virus"=virusAcc,
+           "País"=virusCountries,
+           "Longitud"=virus@ranges@width);
+```
+
+
+```{r}
+nucsNames <- c("a","c","g","t","otros")
+dfVirusNames <- rep(virusCountries, each=length(nucsNames))
+dfNucs<-rep(nucsNames,length(virus))
+dfValues <- c()
+for(i in 1:length(virus)){
+  for(j in 1:4){
+    dfValues<-append(dfValues,alphabetFrequency(virus)[i,j])
+  }
+  others <-c(sum(alphabetFrequency(virus)[i,5:18]))
+  names(others)<-c("others")
+  dfValues<-append(dfValues,others)
+}
+
+data <- data.frame(dfVirusNames, dfNucs, dfValues);
+data
+# Grouped
+ggplot(data, aes(fill=dfNucs, y=dfValues, x=dfVirusNames))+geom_bar(position="dodge", stat="identity")
 ```
 
