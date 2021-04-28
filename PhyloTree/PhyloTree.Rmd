@@ -5,7 +5,10 @@ output: html_notebook
 
 Variantes de coronavirus a emplear:
 ```{r}
-virus <- c("JX869059", "AY508724", "MN908947", "AY390556", "AY278489", "MN985325","AY485277","MT292571")
+virus <- c("MZ015520","MT434757","MT844030","MW322968","MW332241",
+                    "MW306668","MT906650","MW642250","MW769774","MT582499",
+                    "MW633909","MT470219","MT775833","MT994881","MW595909",
+                    "MT263074","MT517434","MT324062","MT396266","MW309429")
 ```
 
 Consultar base de datos NCBI.
@@ -26,10 +29,10 @@ print("(mejor visualizable dentro de R)");
 
 Alineamiento de secuencias:
 ```{r}
-DNA <- AlignSeqs(dna)         #DECIPHER (run once)
-#AlignSeqs() Uses Cluster algorithm to align.
-BrowseSeqs(DNA, highlight=1)  #DECIPHER (RUN ONCE)
-#BrowSeqs() creates a local server in order to display the aligned sequence 
+invisible(capture.output(DNA <- AlignSeqs(dna)))         #DECIPHER (run once)
+#"AlignSeqs()" Uses Cluster algorithm to align.
+#BrowseSeqs(DNA, highlight=1)  #DECIPHER (RUN ONCE)
+#"BrowSeqs()" creates a local server in order to display the aligned sequence 
 ```
 
 Secuencias alineadas (muestra de 300 en servidor local por "BrowSeqs()")
