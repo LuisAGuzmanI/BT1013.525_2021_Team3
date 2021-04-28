@@ -1,15 +1,45 @@
 ---
-title: "SARS-CoV-2 Analysis"
+title: "SARS-CoV-2 Análisis"
 output: html_notebook
 ---
+## Análisis de las variantes de SARS-CoV-2 en los 20 países con mayor número de infectados
+<ol>
+  <li>USA           - USA - MZ015520</li>
+  <li>India         - IND - MT434757</li>
+  <li>Brasil        - BRA - MT844030</li>
+  <li>France        - FRA - MW322968</li>
+  <li>Russia        - RUS - MW332241</li>
+  <li>Turkey        - TUR - MW306668</li>
+  <li>UK            - GBR - MT906650</li>
+  <li>Italy         - ITA - MW642250</li>
+  <li>Spain         - ESP - MW769774</li>
+  <li>Germany       - DEU - MT582499</li>
+  <li>Argentina     - ARG - MW633909</li>
+  <li>Colombia      - COL - MT470219</li>
+  <li>Poland        - POL - MT775833</li>
+  <li>Iran          - IRN - MT994881</li>
+  <li>Mexico       - MEX - MW595909</li>
+  <li><del>Ukraine       - UKR - No results found in NCBI</del></li>
+  <li>Peru          - PER - MT263074</li>
+  <li><del>Indonesia     - IDN - No results found in NCBI</del></li>
+  <li>Czech Rep.    - CZE - MT517434</li>
+  <li>South Africa  - ZAF - MT324062</li>
+  <li>Netherlands   - NLD - MT396266</li>
+  <li>Canada        - CAN - MW309429</li>
+</ol>
 
 ```{r}
-library(ape)
-library(magrittr) #Pipe operator(%>%)
-library(DECIPHER) #DNAStringSet, alignment and more
+library(ggplot2)    #Plots
+library(ape)        #Virus search
+library(magrittr)   #Pipe operator(%>%)
+library(DECIPHER)   #DNAStringSet, alignment and more
+library(reshape2)   #Distance Matrix to Dataframe
+library(ggtree)     #PlotTree
+library(msa)        #Handle MSA (multiple alignment sequence)
+library(ggmsa)      #Plot MSA 
 ```
 
-
+<p>(Consultar base de datos)</p>
 ```{r}
 virusCountries <- c("USA","IND","BRA","FRA","RUS",
                     "TUR","GBR","ITA","ESP","DEU",
@@ -25,31 +55,68 @@ virus <- virusBin %>% as.character %>% lapply(.,paste0,collapse="") %>% unlist %
 ```
 
 
-Longitudes de los virus
+<h3>Longitudes de los virus</h3>
 ```{r}
 data.frame("Virus"=virusAcc,
            "País"=virusCountries,
            "Longitud"=virus@ranges@width);
 ```
 
+<h3>Concentración de nucleóditos</h3>
+```{r, fig.height=10,fig.width=8}
 
-```{r}
 nucsNames <- c("a","c","g","t","otros")
-dfVirusNames <- rep(virusCountries, each=length(nucsNames))
-dfNucs<-rep(nucsNames,length(virus))
-dfValues <- c()
+VirusPais <- rep(virusCountries, each=length(nucsNames))
+Nucleotidos<-rep(nucsNames,length(virus))
+Cantidad <- c()
+
 for(i in 1:length(virus)){
   for(j in 1:4){
-    dfValues<-append(dfValues,alphabetFrequency(virus)[i,j])
+    Cantidad<-append(Cantidad,alphabetFrequency(virus)[i,j])
   }
   others <-c(sum(alphabetFrequency(virus)[i,5:18]))
   names(others)<-c("others")
-  dfValues<-append(dfValues,others)
+  Cantidad<-append(Cantidad,others)
 }
 
-data <- data.frame(dfVirusNames, dfNucs, dfValues);
-data
+data <- data.frame(VirusPais, Nucleotidos, Cantidad);
+
+#Set as vectores for non alphabetical order
+data$VirusPais<-factor(data$VirusPais,levels = unique(data$VirusPais))
+data$Nucleotidos<-factor(data$Nucleotidos,levels = unique(data$Nucleotidos))
+
 # Grouped
-ggplot(data, aes(fill=dfNucs, y=dfValues, x=dfVirusNames))+geom_bar(position="dodge", stat="identity")
+ggplot(data, aes(fill=Nucleotidos, y=Cantidad, x=VirusPais))+geom_bar(position="dodge", stat="identity")+coord_flip()
+```
+<p>(Alineación de secuencias múltiples empleando algoritmo de Cluster)</p>
+```{r}
+invisible(capture.output(aligned<-AlignSeqs(virus)))
 ```
 
+<h3>Matriz de distancia</h3>
+```{r fig.width=10,fig.height=6}
+invisible(capture.output(dist<- DistanceMatrix(aligned)));
+colnames(dist)<-rownames(dist)<-virusCountries
+
+melted<-melt(dist, value.name=c("Valor"), varnames = c("VirusX","VirusY"));   #reshape2. (melt: from dist matrix to dataframe)
+ggplot(data = melted, aes(x=VirusX, y=VirusY, fill=Valor)) + geom_tile();
+```
+<p>(Construcción de árbol filogenético)</p>
+```{r}
+tree <- nj(dist); #ape
+dataMSA = tidy_msa(aligned,3500,3550)
+dataMSA$name=virusCountries
+```
+
+<h3>Análisis jerárquico global de las secuencias</h3>
+```{r fig.width=15}
+ggtree(tree, branch.length = "none") +
+  geom_tiplab(geom = "label", offset =.3, hjust=.7) +
+  geom_facet(geom=geom_msa,data=dataMSA,panel='Secuencias (3500-3550)',font=NULL,color="Chemistry_NT",mapping = aes(x = position, y = ~name, fill = character)) +
+  xlim_tree(1)
+```
+
+<h3>Interpretación de resultados</h3>
+<p align="justify">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae tellus vitae metus imperdiet vestibulum et a nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam in elit lectus. Nunc a ultrices nulla. Aliquam varius augue diam, non dapibus libero semper non. Praesent pharetra, mauris non fermentum ultrices, justo sem fringilla quam, in accumsan felis enim a odio. Integer lobortis mauris orci, ut tristique felis auctor non. Proin porta scelerisque justo, ut facilisis ligula auctor nec. Vestibulum at porttitor nulla. Nunc aliquam ipsum sit amet iaculis iaculis.
+</p>
